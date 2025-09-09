@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+<!-- Header -->
+<header class="bg-white shadow-md p-4 flex justify-between items-center">
+
+    <div class="text-xl font-bold">FOOD PLATFORM</div>
+    <div class="flex items-center space-x-4">
+        <span th:text="'Welcome, ' + ${username}" class="text-sm text-gray-600 font-semibold"></span>
+        <a th:href="@{/logout}" class="text-sm hover:text-blue-600">Logout</a>
+        <a th:href="@{/cart}" class="text-sm hover:text-blue-600">Cart</a>
+        <a th:href="@{/account}" class="text-sm hover:text-blue-600">My Account</a>
+    </div>
+
+</header>
+<!-- Main Content -->
+<main class="p-8">
+    <!-- Sorting Header -->
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold">BROWSE FOOD ITEMS</h1>
+        <p class="text-center text-gray-500 mb-8">Discover delicious meals and add them to your cart.</p>
+        <p th:if="${param.error}" class="text-red-500 mb-4">Item is out of stock or unavailable!</p>
+
+        <a th:href="@{/dashboard(page=0, sortDir=${reverseSortDir})}"
+           class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            Sort by Price: <span th:text="${sortDir.equals('asc') ? 'High → Low' : 'Low → High'}"></span>
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div th:each="food : ${foodItems}" class="bg-white p-4 rounded-lg shadow-md">
+            <div class="h-40 bg-gray-200 mb-4 rounded"></div> <!-- Placeholder Image -->
+            <h2 th:text="${food.name}" class="font-bold text-lg mb-1 uppercase"></h2>
+            <p th:text="${food.description}" class="text-sm text-gray-600 mb-2"></p>
+            <div class="flex justify-between items-center">
+                <span th:text="'$' + ${food.price}" class="text-base font-semibold"></span>
+                <a th:href="@{/add-to-cart/{id}(id=${food.id})}"
+                   class="bg-blue-500 text-white text-sm px-4 py-1 rounded hover:bg-blue-600">
+                    + Add to Cart
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination Controls -->
+
+    <div class="flex justify-center mt-8 space-x-2">
+        <a th:if="${currentPage > 0}"
+           th:href="@{/dashboard(page=${currentPage - 1}, sortDir=${sortDir})}"
+           class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">&larr; Prev</a>
+
+        <span class="px-4 py-2 bg-blue-500 text-white rounded" th:text="${currentPage + 1}"></span>
+
+        <a th:if="${currentPage + 1 < totalPages}"
+           th:href="@{/dashboard(page=${currentPage + 1}, sortDir=${sortDir})}"
+           class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">Next &rarr;</a>
+    </div>
+
+</main>
+</body>
+</html>

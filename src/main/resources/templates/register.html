@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Platform - Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen bg-white text-black">
+<header class="w-full p-4 flex justify-between items-center border-b-2 border-black">
+    <h1 class="text-xl font-bold">FOOD PLATFORM</h1>
+    <div>
+        <a href="/" th:href="@{/}" class="mr-4">Home</a>
+        <a href="/login" th:href="@{/login}" class="mr-4">Login / Sign in</a>
+    </div>
+</header>
+<main class="flex flex-col items-center justify-center flex-grow p-4">
+    <div class="bg-gray-100 p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-2xl font-bold text-center mb-4">CREATE YOUR ACCOUNT</h2>
+        <form th:action="@{/register}" method="post" class="space-y-4" th:object="${user}">
+            <div>
+                <label class="block text-sm font-medium">Full name</label>
+                <input type="text" th:field="*{fullName}" class="w-full p-2 border rounded" placeholder="Enter your full name" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium">email address</label>
+                <input type="email" th:field="*{email}" class="w-full p-2 border rounded" placeholder="Enter your email address" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium">set password</label>
+                <input type="password" th:field="*{password}" class="w-full p-2 border rounded" placeholder="Enter your password" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium">confirm password</label>
+                <input type="password" th:field="*{confirmPassword}" class="w-full p-2 border rounded" placeholder="Confirm your password" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium">street address</label>
+                <input type="text" th:field="*{streetAddress}" class="w-full p-2 border rounded" placeholder="e.g., 123 Main St" required>
+            </div>
+            <div class="flex space-x-4">
+                <div class="w-1/2">
+                    <label class="block text-sm font-medium">city</label>
+                    <input type="text" th:field="*{city}" class="w-full p-2 border rounded" placeholder="e.g., New York" required>
+                </div>
+                <div class="w-1/2">
+                    <label class="block text-sm font-medium">zip code</label>
+                    <input type="text" th:field="*{zipCode}" class="w-full p-2 border rounded" placeholder="e.g., 10001" required>
+                </div>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded-full hover:bg-blue-700">Create Account</button>
+            <div th:if="${error}" class="text-red-500 text-center" th:text="${error}"></div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen bg-white text-black">
+<header class="w-full p-4 flex justify-between items-center border-b-2 border-black">
+    <h1 class="text-xl font-bold">FOOD PLATFORM - ADMIN</h1>
+    <div>
+        <a href="/" th:href="@{/}" class="mr-4">Home</a>
+        <a href="/admin-login" th:href="@{/admin-login}" class="mr-4">Logout</a>
+    </div>
+</header>
+<main class="flex flex-col items-center justify-center flex-grow p-4">
+    <h2 class="text-2xl font-bold">Welcome, Admin!</h2>
+    <p class="mt-4">This is the admin dashboard. Add your admin features here.</p>
+    <div class="mt-6 space-x-4">
+        <a th:href="@{/admin/login}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-700">Logout</a>
+        <a th:href="@{/admin/manage-users}" class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-700">Manage Users</a>
+        <a th:href="@{/admin/manage-food-items}" class="bg-purple-500 text-white px-4 py-2 rounded-full hover:bg-purple-700">Manage Food Items</a>
+    </div>
+</main>
+</body>
+</html>

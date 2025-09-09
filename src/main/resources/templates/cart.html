@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<div class="max-w-4xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Your Cart</h1>
+
+    <div th:if="${#lists.isEmpty(cartItems)}">
+        <p class="text-gray-500">Your cart is empty.</p>
+    </div>
+
+    <div th:if="${!#lists.isEmpty(cartItems)}">
+        <table class="w-full table-auto mb-6 bg-white rounded shadow">
+            <thead>
+            <tr class="bg-gray-200 text-left">
+                <th class="p-3">Item</th>
+                <th class="p-3">Price</th>
+                <th class="p-3">Quantity</th>
+                <th class="p-3">Total</th>
+                <th class="p-3">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cartItems}">
+                <td class="p-3" th:text="${item.name}"></td>
+                <td class="p-3" th:text="${item.price}"></td>
+                <td class="p-3 flex items-center space-x-2">
+                    <a th:href="@{/decrease-quantity/{id}(id=${item.id})}"
+                       class="bg-gray-300 px-2 py-1 rounded hover:bg-gray-400">-</a>
+                    <span th:text="${item.quantity}"></span>
+                    <a th:href="@{/increase-quantity/{id}(id=${item.id})}"
+                       class="bg-gray-300 px-2 py-1 rounded hover:bg-gray-400">+</a>
+                </td>
+                <td class="p-3" th:text="${item.price * item.quantity}"></td>
+                <td class="p-3">
+                    <a th:href="@{/remove-from-cart/{id}(id=${item.id})}"
+                       class="text-red-500 hover:text-red-700 text-lg">❌</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="text-right text-xl font-semibold">
+            Total Price: ₹<span th:text="${totalPrice}"></span>
+        </div>
+    </div>
+
+    <div class="mt-6">
+        <a href="/dashboard"
+           class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded">
+            Continue Shopping
+        </a>
+    </div>
+    <form method="post" th:action="@{/place-order}">
+        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
+            Place Order
+        </button>
+    </form>
+</div>
+
+</body>
+</html>
